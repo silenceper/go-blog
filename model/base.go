@@ -23,6 +23,8 @@ func InitDb()error{
     Dbmap = &gorp.DbMap{Db: Db, Dialect: gorp.MySQLDialect{"InnoDB", "UTF8"}}
     
     Dbmap.AddTableWithName(Post{}, "posts").SetKeys(true, "Id")
+	Dbmap.AddTableWithName(Category{}, "category").SetKeys(true, "Id")
+	Dbmap.AddTableWithName(Tags{}, "tags").SetKeys(true, "Id")
     
     err = Dbmap.CreateTablesIfNotExists()
     

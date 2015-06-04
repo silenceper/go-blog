@@ -1,11 +1,13 @@
 package main
 
 import (
+	//"fmt"
     "net/http"
     "./xingyun"
     "log"
     "os"
     "./controller"
+	"./controller/admin"
     "./model"
 )
 
@@ -16,7 +18,7 @@ func init(){
 
 func main(){
     cfg := &xingyun.Config{
-        StaticHost:"http://192.168.4.122:9000",
+        StaticHost:"/",
         ViewPath:"view",
         Layout:"layout",
     }
@@ -25,12 +27,46 @@ func main(){
 
     //pipe setting
     pipe := server.NewPipe("normal", xingyun.PipeHandlerFunc(func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-        next(w, r)
+        cfg.ViewPath="view"
+		cfg.Layout="layout"
+		next(w, r)
     }))
 
     //route mapping
     server.Get("/",pipe.Wrap(controller.IndexHandler))
-
+	server.Get("/archives/{id:[0-9]+}",pipe.Wrap(controller.DetailHandler))
+	
+	//验证登入权限
+	AuthPipe := server.NewPipe("auth", xingyun.PipeHandlerFunc(func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+		/*
+		ctx:=xingyun.GetContext(r)
+		loginState:=ctx.GetSession("isLogin")
+		//fmt.Println(loginState)
+		if string(loginState)!="yes"{
+			//跳转至登入页面
+			ctx.Redirect("/admin/login")
+			return 
+		}
+		*/
+		next(w, r)
+    }))
+	
+	//admin route
+	//登入
+	server.Get("/admin/login",admin.LoginHandler)
+	server.Post("/admin/login",admin.DoLoginHandler)
+	
+	//文章列表
+	server.Get("/admin/post",AuthPipe.Wrap(admin.PostListHandler))
+	
+	//新增文章
+	server.Get("/admin/post/new",AuthPipe.Wrap(admin.PostNewHandler))
+	server.Post("/admin/post/new",AuthPipe.Wrap(admin.PostDoNewHandler))
+	
+	//更新文章
+	server.Get("/admin/post/update/{id:[0-9]+}",AuthPipe.Wrap(admin.PostUpdateHandler))
+	server.Post("/admin/post/update/{id:[0-9]+}",AuthPipe.Wrap(admin.PostDoUpdateHandler))
+	
     err := server.ListenAndServe(":9000")
     logger.Errorf("%s", err)
 }

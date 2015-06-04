@@ -2,12 +2,17 @@ package controller
 
 import(
     "../xingyun"
+	"fmt"
 )
 
-var name string
-
 func IndexHandler(ctx *xingyun.Context){
-    name="wenzhenlin"
     ctx.Render("index",map[string]interface{}{})
 }
 
+func DetailHandler(ctx *xingyun.Context){
+	id,ok:=ctx.Params["id"]
+	if !ok{
+		ctx.NotFound()
+	}
+	fmt.Println(id)
+}

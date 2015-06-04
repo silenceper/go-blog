@@ -1,2 +1,52 @@
-layout
-{@Content}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <meta name="description" content="Just So So ..." />
+	<meta name="keywords" content="typecho,php,blog" />
+</head>
+<body>
+  <!--[if lt IE 8]>
+      <div class="browsehappy" role="dialog">当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="http://browsehappy.com/">升级你的浏览器</a>.</div>
+  <![endif]-->
+  	<header id="header">
+	    <div class="nav-wrap">
+	     	<nav id="navbar">
+	    		<a class="main" href="http://www.fsqj.com/demo/" title="Hello World">Hello World</a>
+	        	<a href="http://www.fsqj.com/demo/index.php/start-page.html" title="关于">关于</a>
+	            <form action="./" method="post" role="search">
+	        		<input id="s" type="text" class="search-input" name="s" placeholder="Keyword..." autocomplete="off"/>
+	        	</form>
+	      	</nav>
+	  	</div>
+	    <hgroup id="logo">
+	      	<h1>
+	      		<a class="main" href="http://www.fsqj.com/demo/" title="Hello World">Hello World</a>
+
+	      	</h1>
+	      	<h2>Just So So ...</h2>
+	      	<div class="background"></div>
+	    </hgroup>
+  	</header>
+
+	<div id="wrapper">
+		<div id="container">
+			{@Content}
+		</div>
+	</div>
+	<footer id="footer">
+		<p>&copy; 2015 Hello World / PosArt By <a href="http://kunr.me">Kunr</a></p>
+		<p>由 <a href="http://www.typecho.org">Typecho</a> 强力驱动. </p>
+	</footer>
+
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+	<script src="/js/main.js" type="text/javascript"></script>
+	</body>
+</html>
+
+
